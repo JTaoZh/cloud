@@ -1,0 +1,58 @@
+buildscript {
+    ext.kotlin_version = '1.2.20'
+    ext.vertx_version = '3.5.1'
+
+    repositories {
+        //maven { url 'http://maven.aliyun.com/nexus/content/groups/public'}
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/"}
+    }
+
+    dependencies{
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.1"
+    }
+
+}
+
+subprojects {
+
+    version '0.0.1'
+
+    apply plugin: "java"
+    apply plugin: "kotlin"
+    apply plugin: 'application'
+    apply plugin: "com.github.johnrengelman.shadow"
+
+    repositories {
+        //maven { url 'http://maven.aliyun.com/nexus/content/groups/public'}
+        mavenCentral()
+    }
+
+    dependencies {
+        compile "org.jetbrains.kotlin:kotlin-stdlib"
+        compile "org.jetbrains.kotlin:kotlin-reflect"
+        compile "io.vertx:vertx-mqtt:$vertx_version"
+        compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+
+        testCompile "org.jetbrains.kotlin:kotlin-test"
+        testCompile "org.jetbrains.kotlin:kotlin-test-junit"
+    }
+
+    kotlin {
+        experimental {
+            coroutines 'enable'
+        }
+    }
+
+    mainClassName = 'com.jtao.cloud.tcp2mq.MainKt'
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+
+}
+

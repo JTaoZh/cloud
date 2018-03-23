@@ -1,0 +1,20 @@
+version '0.0.1'
+
+dependencies{
+    compile project (':utils')
+}
+
+jar { // 打包jar的配置
+    zip64 = true
+    manifest {
+        attributes 'Implementation-Version': version,
+                'Built-By': System.getProperty('user.name'),
+                'Built-Date': new Date(),
+                'Built-JDK': System.getProperty('java.version'),
+                'Main-Class': 'com.jtao.cloud.tcp2mq.MainKt'
+    }
+}
+
+shadowJar{
+    zip64 = true
+}
