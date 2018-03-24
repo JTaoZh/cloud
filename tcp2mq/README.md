@@ -21,3 +21,5 @@ java -jar tcp2mq-<version>-all.jar
 #### 示例
 * mosquitto_pub -t "test_sub" -m "{\"send-type\":\"single\""\\"remote\":\"127.0.0.1:49782\", \"data-type\":\"string\", \"data\":\"hello\"}"
 * mosquitto_pub -t "test_sub" -m "{\"send-type\":broadcast\", \"data-type\":\"hex\", \"data\":\"313233\"}"
+
+![example](example.gif)
