@@ -1,0 +1,26 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<nz-layout class="layout">
+  <nz-header>
+    <h1>云控</h1>>
+  </nz-header>
+  <nz-layout>
+    <nz-sider [nzWidth]="200" style="background:#fff; padding:24px,0,0,0">
+      <ul nz-menu [nzMode]="'inline'" style="height:100%">
+
+      </ul>
+    </nz-sider>
+    <nz-content style="background:#fff; padding: 24px; min-height: 500px;">
+      <nz-tabset>
+        <nz-tab *ngFor="let tab of tabs">
+          <ng-template #nzTabHeading>
+            <a routerLink="{{tab.route}}">{{tab.name}}</a>
+          </ng-template>
+        </nz-tab>
+      </nz-tabset>
+      <router-outlet></router-outlet>
+      
+    </nz-content>
+  </nz-layout>
+
+  <nz-footer>云控</nz-footer>
+</nz-layout>
