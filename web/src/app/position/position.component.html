@@ -1,6 +1,6 @@
-
-<abm-map #map [options]="options" (ready)="onReady($event)" style="height:85%;"></abm-map>
-
-<!--
-<baidu-map [options]="options" style="display: block; width: 90%; height: 90%;"></baidu-map>
--->
+<baidu-map [options]="options" style="display: block; width: 90%; height: 85%;">
+    <marker [point]="point" [options]="options" ></marker>
+    <control type="navigation" [options]="controlOpts"></control>
+    <control type="scale" [options]="scaleOpts"></control>
+    <control type="maptype" [options]="mapTypeOpts"></control>
+</baidu-map>

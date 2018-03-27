@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Tab, Tabs } from './bean/tab';
-import { Device } from './bean/device';
-import { DeviceService } from './device.service';
+import { Observable } from 'rxjs/Observable';
+import { MqttMessage, MqttService } from 'ngx-mqtt';
 
 @Component({
   selector: 'app-root',
@@ -13,17 +13,14 @@ export class AppComponent {
 
   tabs = Tabs
 
-  devices:Device[];
+  public myOtherMessage$: Observable<MqttMessage>;
+  myMessage:string;
 
-  constructor(private deviceService:DeviceService){
-
+  constructor(private _mqttService: MqttService) {
+    this.myOtherMessage$ = this._mqttService.observe('my/other/topic');
   }
 
-  getDevices(){
-    this.devices = this.deviceService.getDevices()
-  }
-
-  ngOnInit(){
-    this.getDevices()
+  public unsafePublish(topic: string, message: string): void {
+    this._mqttService.unsafePublish(topic, message, {qos: 1, retain: true});
   }
 }

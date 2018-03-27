@@ -1,101 +1,82 @@
 import { NgZone, OnDestroy } from '@angular/core';
 import { Component, OnInit, ViewEncapsulation, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-// import { MapOptions } from 'angular2-baidu-map';
-import { AbmComponent } from 'angular-baidu-maps';
-declare const BMap: any;
-declare const BMAP_SATELLITE_MAP: any;
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
+import { MapOptions, Point, ScaleControlOptions, ControlAnchor, NavigationControlOptions, OverviewMapControlOptions, MapTypeControlOptions, NavigationControlType, MapTypeControlType } from 'angular2-baidu-map';
 
-class Point{
-  jingdu:number;
-  weidu:number
-}
+import { Device } from '../bean/device';
+import { DeviceService } from '../device.service';
 
 @Component({
   selector: 'app-position',
   templateUrl: './position.component.html',
-  styleUrls: ['./position.component.css']
+  styleUrls: ['./position.component.css'],
 })
 export class PositionComponent implements OnInit {
-  options: any = {}
-  status: string = '';
-  @ViewChild('map') mapComp: AbmComponent;
-  points:Point[] = [
-    {jingdu:113.362771,weidu:23.168254},
+  options: MapOptions;
+  selectedDevice: Device;
+  point: Point;
+  controlOpts: NavigationControlOptions
+  overviewmapOpts: OverviewMapControlOptions
+  scaleOpts: ScaleControlOptions
+  mapTypeOpts: MapTypeControlOptions
 
-    {jingdu:113.352961,weidu:23.160181}
-  ]
+  constructor(private deviceService: DeviceService) {
+    this.controlOpts = {
+      anchor: ControlAnchor.BMAP_ANCHOR_TOP_LEFT,
+      type: NavigationControlType.BMAP_NAVIGATION_CONTROL_SMALL,
+      showZoomInfo:true
+    }
+    
+    this.scaleOpts = {
+      anchor: ControlAnchor.BMAP_ANCHOR_BOTTOM_LEFT
+    }
 
-  constructor(private el: ElementRef, private zone: NgZone) { }
+    this.mapTypeOpts = {
+      type: MapTypeControlType.BMAP_MAPTYPE_CONTROL_HORIZONTAL
+    }
 
-  private _map: any;
-  onReady(map: any) {
-    this._map = map;
-    this.points.forEach(p => {
-      var point = new BMap.Point(p.jingdu, p.weidu)
-      map.centerAndZoom(point, 15);
-      map.addControl(new BMap.MapTypeControl());
-      var marker = new BMap.Marker(point)
-      map.addOverlay(marker)
-    });
+    this.selectedDevice = this.deviceService.getSelectedDevice()
+    this.options = {
+      centerAndZoom: {
+        lat: this.selectedDevice.lat,
+        lng: this.selectedDevice.lon,
+        zoom: 16
+      },
+      enableKeyboard: true,
+    }
+    this.point = {
+      lat: this.selectedDevice.lat,
+      lng: this.selectedDevice.lon,
+    }
+    
+    this.deviceService.selectedDevice$.subscribe(
+      device => {
+        this.selectedDevice = device
+        this.options = {
+          centerAndZoom: {
+            lat: device.lat,
+            lng: device.lon,
+            zoom: 16
+          }
+        }
+        this.point = {
+          lat: device.lat,
+          lng: device.lon
+        }
+      }
+    )
 
-    map.enableScrollWheelZoom(true);
-    this.status = '加载完成';
-    //添加监听事件
-    map.addEventListener('tilesloaded', () => {
-      this.status = '地图加载完毕';
-    });
-    map.addEventListener('click', this._click.bind(this));
   }
 
-  _click(e: any) {
-    this.status = `${e.point.lng}, ${e.point.lat}, ${+new Date}`;
+  onScrollDown(){
+    console.log("scroll down")
+    this.options.centerAndZoom.zoom -= 1
   }
 
-  panTo() {
-    this._map.panTo(new BMap.Point(113.362771,23.168254));
+  onScrollUp(){
+    console.log("scroll up")
+    this.options.centerAndZoom.zoom += 1
   }
-
-  zoom() {
-    this._map.setZoom((this._map.getZoom() + 1) % 17);
-  }
-
-  infoWindow() {
-    let infoWin = new BMap.InfoWindow("地址：北京市东城区王府井大街88号乐天银泰百货八层", {
-      width: 200,     // 信息窗口宽度
-      height: 100,     // 信息窗口高度
-      title: "海底捞王府井店", // 信息窗口标题
-      enableMessage: true,//设置允许信息窗发送短息
-      message: "亲耐滴，晚上一起吃个饭吧？戳下面的链接看下地址喔~"
-    });
-    this._map.openInfoWindow(infoWin, this._map.getCenter());
-  }
-
-  // 卫星
-  satelliteOptions: any;
-  private mapSatellite: any;
-  onReadySatellite(map: any) {
-    map.centerAndZoom(new BMap.Point(113.362771,23.168254), 5);
-    map.setMapType(BMAP_SATELLITE_MAP);
-    this.mapSatellite = map;
-  }
-
-  ngOnDestroy(): void {
-    this._map.removeEventListener('click', this._click.bind(this));
-  }
-
-
-  // options:MapOptions
-
-  // constructor(){
-  //   this.options = {
-  //     centerAndZoom: {
-  //       lat: 23.168254,
-  //       lng: 113.362771,
-  //       zoom: 16
-  //     },
-  //     enableKeyboard: true
-  //   }
-  // }
 
   ngOnInit() { }
 }

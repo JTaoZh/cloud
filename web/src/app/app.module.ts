@@ -9,9 +9,9 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { AbmModule } from 'angular-baidu-maps';
 import { BaiduMapModule } from 'angular2-baidu-map';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
@@ -20,13 +20,37 @@ import { HistoryComponent } from './history/history.component';
 import { PositionComponent } from './position/position.component';
 import { ControlComponent } from './control/control.component';
 
+import { DeviceService } from './device.service';
+import { DeviceAsideComponent } from './device-aside/device-aside.component';
+
+import { Observable } from 'rxjs/Observable';
+
+import {
+  MqttMessage,
+  MqttModule,
+  MqttService,
+  MqttServiceOptions
+} from 'ngx-mqtt';
+
+export const MQTT_SERVICE_OPTIONS: MqttServiceOptions = {
+  hostname: 'localhost',
+  port: 9001,
+  path: '/mqtt'
+};
+
+export function mqttServiceFactory() {
+  return new MqttService(MQTT_SERVICE_OPTIONS);
+}
+
+
 @NgModule({
   declarations: [
     AppComponent,
     MonitorComponent,
     HistoryComponent,
     PositionComponent,
-    ControlComponent
+    ControlComponent,
+    DeviceAsideComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,13 +59,17 @@ import { ControlComponent } from './control/control.component';
     BrowserAnimationsModule,
     // for mock http data
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { dataEncapsulation: false }),
-    
+
+    MqttModule.forRoot({provide: MqttService,useFactory: mqttServiceFactory}),
+
     NgZorroAntdModule.forRoot(),
     NgxEchartsModule,
-    AbmModule.forRoot({apiKey: 'GcKVAPwvrdO2G4HzY9etW8xEIMdX2x6m'}),
     BaiduMapModule.forRoot({ak: 'GcKVAPwvrdO2G4HzY9etW8xEIMdX2x6m'}),
     AppRoutingModule
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers:[
+    DeviceService
+  ]
 })
 export class AppModule { }

@@ -1,17 +1,14 @@
 <!--The content below is only a placeholder and can be replaced.-->
+
 <nz-layout class="layout">
   <nz-header>
     <h1>云控</h1>>
   </nz-header>
   <nz-layout>
     <nz-sider [nzWidth]="200" style="background:#fff; padding:24px,0,0,0">
-      <ul nz-menu [nzMode]="'inline'" style="height:100%">
-        <li *ngFor="let device of devices" nz-menu-item>
-          {{device.id}}
-        </li>
-      </ul>
+      <device-aside></device-aside>
     </nz-sider>
-    <nz-content style="background:#fff; padding: 24px; min-height: 500px;">
+    <nz-content style="background:#fff; padding: 24px; min-height: 450px;">
       <nz-tabset>
         <nz-tab *ngFor="let tab of tabs">
           <ng-template #nzTabHeading>
@@ -20,9 +17,11 @@
         </nz-tab>
       </nz-tabset>
       <router-outlet></router-outlet>
-      
+
     </nz-content>
   </nz-layout>
 
-  <nz-footer>云控</nz-footer>
+  <nz-footer>
+    <h1>{{(myOtherMessage$ | async)?.payload.toString()}}</h1>
+  </nz-footer>
 </nz-layout>

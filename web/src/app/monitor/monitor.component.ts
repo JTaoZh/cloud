@@ -1,61 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Device } from '../bean/device';
+import { DeviceService } from '../device.service';
+
 @Component({
   selector: 'app-monitor',
   templateUrl: './monitor.component.html',
   styleUrls: ['./monitor.component.css']
 })
 export class MonitorComponent implements OnInit {
-  options: any;
 
-  constructor() { }
+  selectedDevice:Device;
 
-  ngOnInit() {
-    let xAxisData = [];
-    let data1 = [];
-    let data2 = [];
-
-    for (let i = 0; i < 100; i++) {
-      xAxisData.push('category' + i);
-      data1.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
-      data2.push((Math.cos(i / 5) * (i / 5 - 10) + i / 6) * 5);
-    }
-
-    this.options = {
-      legend: {
-        data: ['bar', 'bar2'],
-        align: 'left'
-      },
-      tooltip: {},
-      xAxis: {
-        data: xAxisData,
-        silent: false,
-        splitLine: {
-          show: false
-        }
-      },
-      yAxis: {
-      },
-      series: [{
-        name: 'bar',
-        type: 'bar',
-        data: data1,
-        animationDelay: function (idx) {
-          return idx * 10;
-        }
-      }, {
-        name: 'bar2',
-        type: 'bar',
-        data: data2,
-        animationDelay: function (idx) {
-          return idx * 10 + 100;
-        }
-      }],
-      animationEasing: 'elasticOut',
-      animationDelayUpdate: function (idx) {
-        return idx * 5;
-      }
-    };
+  constructor(private deviceService:DeviceService){
+    this.selectedDevice = this.deviceService.getSelectedDevice()
+    this.deviceService.selectedDevice$.subscribe(
+      device => this.selectedDevice = device
+    )
   }
 
+  ngOnInit() {
+ 
+  }
 }

@@ -1,0 +1,5 @@
+<ul nz-menu [nzMode]="'inline'" style="height:100%">
+  <li *ngFor="let device of devices" nz-menu-item (click)="selectDevice(device)">
+    <div>{{device.id}}</div>
+  </li>
+</ul>

@@ -1,1 +1,20 @@
-<div echarts [options]="options" class="demo-chart"></div>
+<nz-table>
+    <thead nz-thead>
+        <tr>
+            <th nz-th><span>ID</span></th>
+            <th nz-th><span>温度</span></th>
+            <th nz-th><span>湿度</span></th>
+            <th nz-th><span>经度</span></th>
+            <th nz-th><span>纬度</span></th>
+        </tr>
+    </thead>
+    <tbody nz-tbody>
+        <tr *ngIf="selectedDevice!=null" nz-tbody-tr>
+            <td nz-td><a>{{selectedDevice.id}}</a></td>
+            <td nz-td><a>{{selectedDevice.temp}}</a></td>
+            <td nz-td><a>{{selectedDevice.humi}}</a></td>
+            <td nz-td><a>{{selectedDevice.lon}}</a></td>
+            <td nz-td><a>{{selectedDevice.lat}}</a></td>
+        </tr>
+    </tbody>
+</nz-table>
