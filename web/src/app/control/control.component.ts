@@ -9,6 +9,18 @@ export class ControlComponent implements OnInit {
 
   constructor() { }
 
+  valveOn(){
+    console.log('valve on')
+  }
+
+  valveOff(){
+    console.log('valve off')
+  }
+
+  getHumiture(){
+    console.log('get humiture')
+  }
+
   ngOnInit() {
   }
 

@@ -1,5 +1,6 @@
 import { NgZone, OnDestroy } from '@angular/core';
 import { Component, OnInit, ViewEncapsulation, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+// import { MapOptions } from 'angular2-baidu-map';
 import { AbmComponent } from 'angular-baidu-maps';
 declare const BMap: any;
 declare const BMAP_SATELLITE_MAP: any;
@@ -81,6 +82,20 @@ export class PositionComponent implements OnInit {
   ngOnDestroy(): void {
     this._map.removeEventListener('click', this._click.bind(this));
   }
+
+
+  // options:MapOptions
+
+  // constructor(){
+  //   this.options = {
+  //     centerAndZoom: {
+  //       lat: 23.168254,
+  //       lng: 113.362771,
+  //       zoom: 16
+  //     },
+  //     enableKeyboard: true
+  //   }
+  // }
 
   ngOnInit() { }
 }
