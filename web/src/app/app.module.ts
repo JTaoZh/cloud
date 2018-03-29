@@ -6,42 +6,24 @@ import { HttpClientModule } from '@angular/common/http';
 
 // for mock http data
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService }  from './in-memory-data.service';
+import { InMemoryDataService }  from './services/in-memory-data.service';
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { BaiduMapModule } from 'angular2-baidu-map';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './/app-routing.module';
-import { MonitorComponent } from './monitor/monitor.component';
-import { HistoryComponent } from './history/history.component';
-import { PositionComponent } from './position/position.component';
-import { ControlComponent } from './control/control.component';
+import { AppMqttModule } from './modules/app-mqtt.module'
 
-import { DeviceService } from './device.service';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './modules/app-routing.module';
+import { MonitorComponent } from './tabs/monitor/monitor.component';
+import { HistoryComponent } from './tabs/history/history.component';
+import { PositionComponent } from './tabs/position/position.component';
+import { ControlComponent } from './tabs/control/control.component';
 import { DeviceAsideComponent } from './device-aside/device-aside.component';
 
-import { Observable } from 'rxjs/Observable';
-
-import {
-  MqttMessage,
-  MqttModule,
-  MqttService,
-  MqttServiceOptions
-} from 'ngx-mqtt';
-
-export const MQTT_SERVICE_OPTIONS: MqttServiceOptions = {
-  hostname: 'localhost',
-  port: 9001,
-  path: '/mqtt'
-};
-
-export function mqttServiceFactory() {
-  return new MqttService(MQTT_SERVICE_OPTIONS);
-}
-
+import { DeviceService } from './services/device.service';
 
 @NgModule({
   declarations: [
@@ -57,13 +39,15 @@ export function mqttServiceFactory() {
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    // for mock http data
+    // mock http data for test
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { dataEncapsulation: false }),
-
-    MqttModule.forRoot({provide: MqttService,useFactory: mqttServiceFactory}),
-
+    //mqtt
+    AppMqttModule,
+    // zorro-antd
     NgZorroAntdModule.forRoot(),
+    // echarts
     NgxEchartsModule,
+    // baidu map
     BaiduMapModule.forRoot({ak: 'GcKVAPwvrdO2G4HzY9etW8xEIMdX2x6m'}),
     AppRoutingModule
   ],

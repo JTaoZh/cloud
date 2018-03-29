@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { Device } from './bean/device'
+import { Device } from '../bean/device'
 import { Observable, Subject } from 'rxjs';
 import { of } from 'rxjs/observable/of';
 

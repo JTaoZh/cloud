@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Device } from '../bean/device';
-import { DeviceService } from '../device.service';
+import { Device } from '../..//bean/device';
+import { DeviceService } from '../../services/device.service';
 
 @Component({
   selector: 'app-monitor',

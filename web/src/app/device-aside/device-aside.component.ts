@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Device } from '../bean/device';
-import { DeviceService } from '../device.service';
+import { DeviceService } from '../services//device.service';
 
 @Component({
   selector: 'device-aside',

@@ -3,8 +3,8 @@ import { Component, OnInit, ViewEncapsulation, AfterViewInit, ViewChild, Element
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { MapOptions, Point, ScaleControlOptions, ControlAnchor, NavigationControlOptions, OverviewMapControlOptions, MapTypeControlOptions, NavigationControlType, MapTypeControlType } from 'angular2-baidu-map';
 
-import { Device } from '../bean/device';
-import { DeviceService } from '../device.service';
+import { Device } from '../..//bean/device';
+import { DeviceService } from '../../services/device.service';
 
 @Component({
   selector: 'app-position',

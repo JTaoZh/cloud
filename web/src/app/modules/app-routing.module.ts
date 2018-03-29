@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { ControlComponent } from './control/control.component'
-import { HistoryComponent } from './history/history.component'
-import { MonitorComponent } from './monitor/monitor.component'
-import { PositionComponent } from './position/position.component'
+import { ControlComponent } from './tabs/control/control.component'
+import { HistoryComponent } from './tabs/history/history.component'
+import { MonitorComponent } from './tabs/monitor/monitor.component'
+import { PositionComponent } from './tabs/position/position.component'
 
 const routes:Routes = [
   {path:'monitor', component:MonitorComponent},

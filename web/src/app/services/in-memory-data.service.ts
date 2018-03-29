@@ -1,6 +1,6 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
-import { Device } from './bean/device'
+import { Device } from '../bean/device'
 
 export class InMemoryDataService implements InMemoryDbService{
     createDb(){
